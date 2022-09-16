@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './Components/Navbar/NavbarComponent'
+import HomePage from './pages/HomePage'
+import { createContext, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import CoursePage from './pages/CoursePage';
+
+export const SearchContext = createContext({});
 
 function App() {
+  const [search, setSearch] = useState("")
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <SearchContext.Provider value={{ search, setSearch }}>
+        <div className="App position-relative">
+          <div>
+            <Navbar />
+          </div>
+          
+          <Routes>
+            <Route path='/' element={<HomePage />}></Route>
+            <Route path='/home' element={<HomePage />}></Route>
+            <Route path='/home/:id' element={<CoursePage />}></Route>
+          </Routes>
+        </div>
+      </SearchContext.Provider>
+
+    </Router >
   );
 }
 
